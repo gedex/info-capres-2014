@@ -1,0 +1,84 @@
+<div class="row candidate">
+	<div class="col-md-4">
+		<div href="#" class="thumbnail">
+			<img src="<%- candidate.img.url %>" alt="<%- candidate.nama %>">
+			<% if (!_.isUndefined(candidate.img.source)) { %>
+			<cite>Sumber gambar <%- candidate.img.source %></cite>
+			<% } %>
+		</div>
+		<div class="box-info">
+			<h3>About</h3>
+			<dl>
+				<dt>Role</dt>
+				<dd><%- candidate.role %></dd>
+
+				<dt>Pasangan dari</dt>
+				<dd><a href="#candidate/<%- mate.id %>"><%- mate.nama %></a></dd>
+
+				<dt>Jenis Kelamin</dt>
+				<dd>
+					<% if (candidate.jenis_kelamin === "L") { %>
+					Laki-laki
+					<% } else { %>
+					Perempuan
+					<% } %>
+				</dd>
+
+				<dt>Agama</dt>
+				<dd><%- candidate.agama %></dd>
+
+				<dt>Tempat Lahir</dt>
+				<dd><%- candidate.tempat_lahir %></dd>
+
+				<dt>Tgl Lahir</dt>
+				<dd><%- candidate.tanggal_lahir %></dd>
+
+				<dt>Status Perkawinan</dt>
+				<dd><%- candidate.status_perkawinan %></dd>
+
+				<dt>Nama Pasangan</dt>
+				<dd>
+					<% if (!_.isEmpty(candidate.nama_pasangan)) { %>
+					<%- candidate.nama_pasangan %>
+					<% } else { %>
+					-
+					<% } %>
+				</dd>
+
+				<dt>Jumlah Anak</dt>
+				<dd><%- candidate.jumlah_anak %></dd>
+			</dl>
+		</div>
+	</div>
+	<div class="col-md-8">
+		<div class="page-header">
+			<h1><%- candidate.nama %> <small>(<%- candidate.role %>)</small></h1>
+		</div>
+		<div class="bio">
+			<p class="lead"><%- candidate.biografi_lead %></p>
+
+			<p><%- candidate.biografi_secondary %></p>
+		</div><!--/.bio-->
+
+		<div class="box-info">
+			<h3>Riwayat Pendidikan</h3>
+			<dl>
+				<dt>Teknik Perminyakan, ITB</dt>
+				<dd>1973 &mdash; 1980</dd>
+				<dt>Teknik Perminyakan, ITB</dt>
+				<dd>1973 &mdash; 1980</dd>
+			</dl>
+		</div><!--/.box-info-->
+
+		<div class="box-info">
+			<h3>Riwayat Pendidikan</h3>
+			<dl>
+				<dt>Teknik Perminyakan, ITB</dt>
+				<dd>1973 &mdash; 1980</dd>
+				<dt>Teknik Perminyakan, ITB</dt>
+				<dd>1973 &mdash; 1980</dd>
+			</dl>
+		</div><!--/.box-info-->
+
+	</div><!--/.col-md-7-->
+</div><!--/.candidate-->

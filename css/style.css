@@ -1,0 +1,176 @@
+body {
+	font-family: 'Gotham 7r', 'Gotham A', 'Gotham B', Arial, sans-serif;
+}
+
+header.navbar {
+	margin-bottom: 0;
+	text-transform: uppercase;
+	background-color: #f6615b;
+	border: none;
+	border-radius: 0;
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .navbar-brand:hover {
+	color: #fff;
+}
+.navbar-default .navbar-nav>li>a,
+.navbar-default .navbar-nav>li>a:hover {
+	color: #fff;
+}
+
+.navbar-nav li {
+	font-weight: 700;
+	font-size: 14px;
+	color: #fff;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 740px;
+  }
+  .container .jumbotron.primary .stamp {
+  	margin: 25px 0 35px;
+  }
+  .candidates-pair .thumbnail {
+  	margin-bottom: 110px;
+  }
+}
+.container .jumbotron {
+	padding-left: 0;
+	padding-right: 0;
+	background: transparent;
+}
+
+.content-head {
+	background: radial-gradient(ellipse farthest-side at top,#73646e 0,#3c3237 100%);
+}
+.container .jumbotron {
+	text-align: center;
+}
+.container .jumbotron.primary h1 {
+	color: #3c3237;
+	text-shadow: 0 1px 1px rgba(255,255,255,0.2);
+}
+.container .jumbotron.primary h1 span {
+	display: inline-block;
+	padding: 0 15px;
+	text-transform: uppercase;
+	color: #fff;
+	text-shadow: 0 2px 2px rgba(0,0,0,0.5);
+}
+.container .jumbotron.primary h3 {
+	color: #87bab6;
+	text-shadow: 0 2px 2px rgba(0,0,0,0.4)
+}
+.container .arrow-down {
+	text-align: center;
+}
+.container .arrow-down a {
+	display: inline-block;
+	width: 48px;
+	height: 48px;
+	margin-bottom: -50px;
+	background-color: #fff;
+	border-radius: 100%;
+	color: #f6615b;
+}
+.container .arrow-down .genericon {
+	width: 48px;
+	height: 48px;
+	font-size: 48px;
+}
+
+.container .jumbotron.secondary h1 {
+	text-transform: uppercase;
+}
+
+a.thumbnail {
+	display: block;
+}
+a.thumbnail:hover {
+	text-decoration: none;
+}
+a.thumbnail:hover h3 {
+	text-decoration: underline;
+}
+
+.candidates-pair .thumbnail {
+	text-align: center;
+	border: none;
+}
+.candidates-pair .thumbnail img {
+	border-radius: 100%;
+}
+.candidates-pair .thumbnail .caption {
+	height: 146px;
+	overflow: hidden;
+}
+
+.banners .thumbnail .caption {
+	height: 150px;
+	position: relative;
+	text-align: center;
+}
+.banners .thumbnail h3 {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+}
+
+.candidate .thumbnail {
+	margin: 40px 0 20px;
+	border: none;
+}
+.candidate .thumbnail cite {
+	display: block;
+	margin-top: 10px;
+	text-align: center;
+	color: #999;
+	font-size: 10px;
+}
+
+.page-header {
+	border-width: 3px;
+	border-color: #ddd;
+}
+
+.box-info {
+	margin: 50px 0 35px;
+}
+.box-info h3 {
+	border-bottom: 3px solid #ddd;
+	text-transform: uppercase;
+}
+.box-info dd {
+	margin-bottom: 25px;
+}
+.box-info blockquote {
+	font-size: 11px;
+}
+
+.article {
+	margin-bottom: 35px;
+}
+
+#footer {
+	padding: 25px 0 10px;
+	color: #ddd;
+	border-top: 1px solid #ddd;
+}
+#footer .container {
+	letter-spacing: 2px;
+	text-align: center;
+	text-transform: uppercase;
+}
+#footer a {
+	color: #999;
+}
+#footer .primary {
+	font-size: 14px;
+	color: #999;
+}
+#footer .secondary {
+	font-size: 10px;
+	color: #bbb;
+}

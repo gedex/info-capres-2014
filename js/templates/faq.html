@@ -1,0 +1,25 @@
+<div class="page-header">
+	<h1>FAQ (Frequently Asked Questions)</h1>
+</div>
+<div class="lead">
+	FAQ provides answers to questions about rules and regulations affecting the 2014 Indonesian Presidential elections.
+</div>
+<div class="box-info">
+	<dl>
+		<% _.each(faq, function(qa) { %>
+		<dt><%- qa.question %></dt>
+		<dd>
+			<%- qa.answer %>
+			<% if (!_.isEmpty(qa.excerpt_law)) { %>
+			<blockquote>
+				<p><%- qa.excerpt_law %><p>
+				<% if (!_.isEmpty(qa.reference_law)) { %>
+					<footer><cite><%- qa.reference_law %></cite></footer>
+				<% } %>
+			</blockquote>
+			<% } %>
+		</dd>
+
+		<% }); %>
+	</dl>
+</div><!--/.box-info-->
