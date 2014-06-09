@@ -16,19 +16,19 @@ define(function(require, exports, module) {
 				// 200x200.
 				pictures: {
 					ps: {
-						url: "/img/candidates/ps.jpg",
+						url: "img/candidates/ps.jpg",
 						source: "Aktual.co/Tino Oktaviano"
 					},
 					hr: {
-						url: "/img/candidates/hr.jpg",
+						url: "img/candidates/hr.jpg",
 						source: "sinarharapan.co/SH"
 					},
 					jw: {
-						url: "/img/candidates/jw.jpg",
+						url: "img/candidates/jw.jpg",
 						source: "liputan6.com"
 					},
 					jk: {
-						url: "/img/candidates/jk.jpg",
+						url: "img/candidates/jk.jpg",
 						source: "jusufkalla.info"
 					},
 					unavailable: {
