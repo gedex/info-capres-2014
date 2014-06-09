@@ -63,20 +63,54 @@
 		<div class="box-info">
 			<h3>Riwayat Pendidikan</h3>
 			<dl>
-				<dt>Teknik Perminyakan, ITB</dt>
-				<dd>1973 &mdash; 1980</dd>
-				<dt>Teknik Perminyakan, ITB</dt>
-				<dd>1973 &mdash; 1980</dd>
+				<% _.each(candidate.riwayat_pendidikan, function(pendidikan){ %>
+				<dt><%- pendidikan.ringkasan %></dt>
+				<dd><%- pendidikan.tanggal_mulai %> &mdash; <%- pendidikan.tanggal_selesai %></dd>
+				<% }); %>
 			</dl>
 		</div><!--/.box-info-->
 
 		<div class="box-info">
-			<h3>Riwayat Pendidikan</h3>
+			<h3>Riwayat Pekerjaan</h3>
 			<dl>
-				<dt>Teknik Perminyakan, ITB</dt>
-				<dd>1973 &mdash; 1980</dd>
-				<dt>Teknik Perminyakan, ITB</dt>
-				<dd>1973 &mdash; 1980</dd>
+				<% _.each(candidate.riwayat_pekerjaan, function(pekerjaan){ %>
+				<dt><%- pekerjaan.ringkasan %></dt>
+					<% if (!_.isEmpty(pekerjaan.tanggal_mulai) && !_.isEmpty(pekerjaan.tanggal_selesai)) { %>
+					<dd><%- pekerjaan.tanggal_mulai %> &mdash; <%- pekerjaan.tanggal_selesai %></dd>
+					<% } else { %>
+					<dd>Unknown</dd>
+					<% } %>
+				<% }); %>
+			</dl>
+		</div><!--/.box-info-->
+
+		<div class="box-info">
+			<h3>Riwayat Organisasi</h3>
+			<dl>
+				<% _.each(candidate.riwayat_organisasi, function(org){ %>
+				<dt><%- org.ringkasan %></dt>
+				<dd>
+					<% if (!_.isEmpty(org.jabatan)) { %>
+					<%- org.jabatan %><br>
+					<% } %>
+					<%- org.tanggal_mulai %> &mdash; <%- org.tanggal_selesai %>
+				</dd>
+				<% }); %>
+			</dl>
+		</div><!--/.box-info-->
+
+		<div class="box-info">
+			<h3>Riwayat Penghargaan</h3>
+			<dl>
+				<% _.each(candidate.riwayat_penghargaan, function(penghargaan){ %>
+				<dt><%- penghargaan.ringkasan %></dt>
+				<dd>
+					<% if (!_.isEmpty(penghargaan.institusi)) { %>
+						<%- penghargaan.institusi %><br>
+					<% } %>
+					<%- penghargaan.tanggal %>
+				</dd>
+				<% }); %>
 			</dl>
 		</div><!--/.box-info-->
 
