@@ -41,6 +41,15 @@ define(function(require, exports, module) {
 					} else {
 						resp.data.results.caleg[i].img = app.api.shim.pictures.unavailable;
 					}
+
+					var tempat_tinggal = [];
+					_.each(['kelurahan_tinggal', 'kecamatan_tinggal', 'kab_kota_tinggal', 'provinsi_tinggal'], function(key){
+						if (!_.isEmpty(resp.data.results.caleg[i][key])) {
+							tempat_tinggal.push(resp.data.results.caleg[i][key]);
+						}
+					});
+
+					resp.data.results.caleg[i].tempat_tinggal = tempat_tinggal.join(", ");
 				});
 
 				return resp.data.results.caleg;
