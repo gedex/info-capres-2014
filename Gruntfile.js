@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		clean: ["dist/"],
 
-		jshint: ["js/collections/*.js", "js/models/*.js", "js/views/*.js", "js/config.js", "js/main.js", "js/router.js"],
+		jshint: ["js/collections/*.js", "js/views/*.js", "js/config.js", "js/app.js", "js/main.js", "js/router.js"],
 
 		requirejs: {
 			release: {
@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 					optimize: "uglify2",
 					findNestedDependencies: true,
 					name: "almond",
-					baseUrl: "dist/js",
+					baseUrl: "js",
 					wrap: true,
 					preserveLicenseComments: false
 				}
@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 		cssmin: {
 			release: {
 				files: {
-					"dist/css/style.min.css": ["css/font.css", "css/genericons.css", "css/style.css"]
+					"dist/css/style.min.css": ["css/genericons.css", "css/bootstrap.min.css", "css/font.css", "css/style.css"]
 				}
 			}
 		},
@@ -42,11 +42,57 @@ module.exports = function(grunt) {
 		copy: {
 			relase: {
 				files: [
-					{ src: ["js/**"], dest: "dist/" },
-					{ src: ["css/font/*"], dest: "dist/" }
+					{ src: ["css/font/*"], dest: "dist/" },
+					{ src: ["img/**"], dest: "dist/" }
 				]
 			}
 		},
+
+		filerev: {
+			options: {
+				encoding: 'utf8',
+				algorithm: 'md5',
+				length: 8
+			},
+			img_candidates: {
+				src: "dist/img/candidates/*.{jpg,jpeg,gif,png,webp}",
+				dest: "dist/img/candidates"
+			},
+			css: {
+				src: "dist/css/style.min.css",
+				dest: "dist/css"
+			},
+			js_bundle: {
+				src: "dist/source.min.js",
+				dest: "dist"
+			},
+			js_bundle_map: {
+				src: "dist/source.min.js.map",
+				dest: "dist"
+			}
+		},
+
+		usemin: {
+			html: "dist/index.html",
+			js_main: "dist/source.min*.js",
+			css: "dist/css/style.min.css",
+			options: {
+				assetsDirs: ["dist"],
+				patterns: {
+					js_main: [
+						[/(img\/candidates\/\w+\.(jpg|jpeg|gif|png|webp))/g, "Replacing reference to candidate images"],
+						[/(source\.min\.js\.map)/g, "Replacing reference to source.min.js.map"]
+					],
+				}
+			}
+		},
+
+		"gh-pages": {
+			options: {
+				base: "dist"
+			},
+			src: ["**"]
+		}
 
 	});
 
@@ -56,7 +102,9 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("grunt-contrib-copy");
 	grunt.loadNpmTasks("grunt-processhtml");
 	grunt.loadNpmTasks("grunt-bbb-requirejs");
-	grunt.loadNpmTasks("grunt-bbb-styles");
+	grunt.loadNpmTasks('grunt-filerev');
+	grunt.loadNpmTasks('grunt-usemin');
+	grunt.loadNpmTasks('grunt-gh-pages');
 
 	grunt.registerTask("default", [
 		"clean",
@@ -64,6 +112,8 @@ module.exports = function(grunt) {
 		"processhtml",
 		"copy",
 		"requirejs",
-		"cssmin"
+		"cssmin",
+		"filerev",
+		"usemin"
 	]);
 };

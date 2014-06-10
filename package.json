@@ -1,6 +1,26 @@
 {
 	"name": "info-capres-2014",
+	"description": "SPA (Single Page Application) powered by Backbone.js. Data is consumed from pemiluapi.",
 	"version": "0.0.1",
+	"homepage": "https://github.com/gedex/info-capres-2014",
+	"author": {
+		"name": "Akeda Bagus",
+		"url": "http://gedex.web.id"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/gedex/info-capres-2014.git"
+	},
+
+	"bugs": {
+		"url": "https://github.com/gedex/info-capres-2014/issues"
+	},
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "https://github.com/gedex/info-capres-2014/raw/master/LICENSE"
+		}
+	],
 
 	"devDependencies": {
 		"grunt": "~0.4.1",
@@ -10,6 +30,9 @@
 		"grunt-contrib-copy": "~0.5.0",
 		"grunt-contrib-clean": "~0.5.0",
 		"grunt-contrib-compress": "~0.6.0",
-		"grunt-processhtml": "~0.3.0"
+		"grunt-processhtml": "~0.3.0",
+		"grunt-filerev": "~0.2.1",
+		"grunt-usemin": "~2.2.0",
+		"grunt-gh-pages": "~0.9.1"
 	}
 }
