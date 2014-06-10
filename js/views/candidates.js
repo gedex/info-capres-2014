@@ -27,9 +27,9 @@ define(function(require, exports, module) {
 				if (role === "cawapres" && _.isUndefined(pairs[id_mate])) pairs[id_mate] = {};
 
 				if (role === "capres") {
-					pairs[id]["capres"] = model.toJSON();
+					pairs[id].capres = model.toJSON();
 				} else if (role === "cawapres") {
-					pairs[id_mate]["cawapres"] = model.toJSON();
+					pairs[id_mate].cawapres = model.toJSON();
 				}
 			});
 
