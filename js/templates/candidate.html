@@ -7,54 +7,81 @@
 			<% } %>
 		</div>
 		<div class="box-info">
-			<h3>About</h3>
-			<dl>
-				<dt>Role</dt>
-				<dd><%- candidate.role %></dd>
+			<h3><span class="genericon genericon-user"></span> About</h3>
+			<div class="box-info-content">
+				<dl>
+					<dt>Name</dt>
+					<dd><%- candidate.nama %></dd>
 
-				<dt>Partai</dt>
-				<dd><%- candidate.partai.nama %></dd>
+					<dt>Role</dt>
+					<dd><%- candidate.role %></dd>
 
-				<dt>Pasangan dari</dt>
-				<dd><a href="#candidate/<%- mate.id %>"><%- mate.nama %></a></dd>
+					<dt>Partai</dt>
+					<dd><%- candidate.partai.nama %></dd>
 
-				<dt>Jenis Kelamin</dt>
-				<dd>
-					<% if (candidate.jenis_kelamin === "L") { %>
-					Laki-laki
-					<% } else { %>
-					Perempuan
-					<% } %>
-				</dd>
+					<dt>Pasangan dari</dt>
+					<dd><a href="#candidate/<%- mate.id %>"><%- mate.nama %></a></dd>
 
-				<dt>Agama</dt>
-				<dd><%- candidate.agama %></dd>
+					<dt>Jenis Kelamin</dt>
+					<dd>
+						<% if (candidate.jenis_kelamin === "L") { %>
+						Laki-laki
+						<% } else { %>
+						Perempuan
+						<% } %>
+					</dd>
 
-				<dt>Tempat Lahir</dt>
-				<dd><%- candidate.tempat_lahir %></dd>
+					<dt>Agama</dt>
+					<dd><%- candidate.agama %></dd>
 
-				<dt>Tgl Lahir</dt>
-				<dd><%- candidate.tanggal_lahir %></dd>
+					<dt>Tempat Lahir</dt>
+					<dd><%- candidate.tempat_lahir %></dd>
 
-				<dt>Status Perkawinan</dt>
-				<dd><%- candidate.status_perkawinan %></dd>
+					<dt>Tgl Lahir</dt>
+					<dd><%- candidate.tanggal_lahir %></dd>
 
-				<dt>Nama Pasangan</dt>
-				<dd>
-					<% if (!_.isEmpty(candidate.nama_pasangan)) { %>
-					<%- candidate.nama_pasangan %>
-					<% } else { %>
-					-
-					<% } %>
-				</dd>
+					<dt>Status Perkawinan</dt>
+					<dd><%- candidate.status_perkawinan %></dd>
 
-				<dt>Jumlah Anak</dt>
-				<dd><%- candidate.jumlah_anak %></dd>
+					<dt>Nama Pasangan</dt>
+					<dd>
+						<% if (!_.isEmpty(candidate.nama_pasangan)) { %>
+						<%- candidate.nama_pasangan %>
+						<% } else { %>
+						-
+						<% } %>
+					</dd>
 
-				<dt>Tempat Tinggal</dt>
-				<dd><%- candidate.tempat_tinggal %></dd>
-			</dl>
-		</div>
+					<dt>Jumlah Anak</dt>
+					<dd><%- candidate.jumlah_anak %></dd>
+
+					<dt>Tempat Tinggal</dt>
+					<dd><%- candidate.tempat_tinggal %></dd>
+				</dl>
+			</div><!-- /.box-info-content-->
+		</div><!--/.box-info-->
+
+		<div class="box-info">
+			<h3><span class="genericon genericon-summary"></span> Promises</h3>
+			<div class="box-info-content">
+				<p><a href="#promises/candidate/<%- candidate.id %>">See all promises made by this candidate</a></p>
+			</div>
+		</div><!--/.box-info-->
+
+		<div class="box-info">
+			<h3><span class="genericon genericon-youtube"></span> Videos</h3>
+			<div class="box-info-content">
+				<p><a href="#videos/candidate/<%- candidate.id %>">See all videos related to this candidate</a></p>
+			</div>
+		</div><!--/.box-info-->
+
+		<div class="box-info">
+			<h3><span class="genericon genericon-month"></span> Events</h3>
+			<div class="box-info-content">
+				<p><a href="#events/candidate/<%- candidate.id %>">See all events this candidate will attend</a></p>
+			</div>
+		</div><!--/.box-info-->
+
 	</div>
 	<div class="col-md-8">
 		<div class="page-header">

@@ -1,0 +1,27 @@
+<div class="page-header">
+	<h1>Videos</h1>
+</div>
+<div class="lead">
+	<% if (!_.isEmpty(candidate)) { %>
+	List of videos related to candidate <strong><%- candidate.nama %></strong>.<br>
+	See all <a href="#videos">all videos</a>.
+	<% } else if (!_.isEmpty(tag)) { %>
+	List of videos tagged with <strong><%- tag %></strong>.<br>
+	See all <a href="#videos">all videos</a>.
+	<% } else { %>
+	List of all videos related to all candidates.
+	<% } %>
+</div>
+
+<div class="row videos">
+	<% _.each(videos, function(video) { %>
+	<div class="col-sm-6 col-md-6">
+		<a href="#video/<%- video.id %>" data-ytid="<%- video.youtube_id %>" class="thumbnail video">
+			<img src="http://img.youtube.com/vi/<%- video.youtube_id %>/mqdefault.jpg" width="320">
+			<div class="caption">
+				<h3><%- video.judul_excerpt %></h3>
+			</div>
+		</a>
+	</div>
+	<% }); %>
+</div><!--/.row-->

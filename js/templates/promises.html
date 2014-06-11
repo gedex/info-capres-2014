@@ -1,0 +1,38 @@
+<div class="page-header">
+	<h1>Promises</h1>
+</div>
+<div class="lead">
+	<% if (!_.isEmpty(candidate)) { %>
+	List of promises made by <strong><%- candidate.nama %></strong>.<br>
+	See all <a href="#promises">all promises</a>.
+	<% } else if (!_.isEmpty(tag)) { %>
+	List of promises tagged with <strong><%- tag %></strong>.<br>
+	See all <a href="#promises">all promises</a>.
+	<% } else { %>
+	List of promises by all candidates.
+	<% } %>
+</div>
+<div class="box-info">
+	<dl>
+		<% _.each(promises, function(promise) { %>
+		<dt><%- promise.context_janji %></dt>
+		<dd>
+			<%- promise.janji %>
+			<% if (!_.isEmpty(promise.tags)) { %>
+			<ul class="list-tags list-inline">
+				<% _.each(promise.tags, function(tag) { %>
+				<li class="tag"><a href="#promises/tag/<%- tag %>"><span class="genericon genericon-tag"></span> <%- tag %></a></li>
+				<% }); %>
+			</ul>
+			<% } %>
+
+			<% if (!_.isEmpty(promise.judul_sumber) && !_.isEmpty(promise.url_sumber)) { %>
+			<blockquote>
+				<footer><cite><a href="<%- promise.url_sumber %>" target="_blank"><%- promise.judul_sumber %></a></cite> <%- promise.tanggal %></footer>
+			</blockquote>
+			<% } %>
+		</dd>
+
+		<% }); %>
+	</dl>
+</div><!--/.box-info-->

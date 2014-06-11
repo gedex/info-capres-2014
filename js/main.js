@@ -1,7 +1,7 @@
 define("run", function(require){
 	var $ = require("jquery");
 	var _ = require("underscore");
-	var bootstrap = require("libs/bootstrap/dist/js/bootstrap.min");
+	var bootstrap = require("bootstrap");
 	var Backbone = require("backbone");
 	var Router = require("router");
 	var App = require("app");

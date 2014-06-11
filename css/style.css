@@ -118,15 +118,14 @@ a.thumbnail:hover h3 {
 	overflow: hidden;
 }
 
-.banners .thumbnail .caption {
+.banners .thumbnail .caption,
+.videos .thumbnail .caption {
 	height: 150px;
 	position: relative;
 	text-align: center;
 }
-.banners .thumbnail h3 {
-	position: absolute;
-	width: 100%;
-	bottom: 0;
+.banners .thumbnail h3,
+.videos .thumbnail h3 {
 }
 
 .candidate .thumbnail {
@@ -147,11 +146,23 @@ a.thumbnail:hover h3 {
 }
 
 .box-info {
+	display: block;
 	margin: 50px 0 35px;
 }
 .box-info h3 {
+	margin-bottom: 0;
 	border-bottom: 3px solid #ddd;
 	text-transform: uppercase;
+}
+.box-info .genericon {
+	width: 24px;
+	height: 24px;
+	font-size: 24px;
+	line-height: 1.1;
+}
+.box-info-content {
+	padding: 1em;
+	background-color: #efefef;
 }
 .box-info dd {
 	margin-bottom: 25px;
@@ -159,9 +170,40 @@ a.thumbnail:hover h3 {
 .box-info blockquote {
 	font-size: 11px;
 }
+.box-info .tag {
+	font-size: 11px;
+}
+.box-info .tag a:hover {
+	text-decoration: none;
+}
+.box-info .tag .genericon {
+	width: 11px;
+	height: 11px;
+	font-size: 11px;
+}
 
 .article {
 	margin-bottom: 35px;
+}
+
+/**
+ * For a single video view.
+ *
+ * Based on http://avexdesigns.com/responsive-youtube-embed/
+ */
+.video-container {
+	position: relative;
+	padding-bottom: 56.25%;
+	padding-top: 30px; height: 0; overflow: hidden;
+}
+.video-container iframe,
+.video-container object,
+.video-container embed {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 }
 
 #footer {

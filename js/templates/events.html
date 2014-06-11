@@ -1,0 +1,38 @@
+<div class="page-header">
+	<h1>Events</h1>
+</div>
+<div class="lead">
+	<% if (!_.isEmpty(candidate)) { %>
+	List of events that <strong><%- candidate.nama %></strong> will attend or has attended.<br>
+	See all <a href="#events">all events</a>.
+	<% } else if (!_.isEmpty(tag)) { %>
+	List of events tagged with <strong><%- tag %></strong>.<br>
+	See all <a href="#events">all events</a>.
+	<% } else { %>
+	List of events.
+	<% } %>
+</div>
+<div class="box-info">
+	<dl>
+		<% _.each(events, function(evt) { %>
+		<dt><%- evt.judul %></dt>
+		<dd>
+			<p><%- evt.deskripsi %></p>
+			<% if (!_.isEmpty(evt.tags)) { %>
+			<ul class="list-tags list-inline">
+				<% _.each(evt.tags, function(tag) { %>
+				<li class="tag"><a href="#events/tag/<%- tag %>"><span class="genericon genericon-tag"></span> <%- tag %></a></li>
+				<% }); %>
+			</ul>
+			<% } %>
+
+			<% if (!_.isEmpty(evt.tanggal_mulai) && !_.isEmpty(evt.tanggal_selesai)) { %>
+			<p>
+				<%- evt.tanggal_mulai %> <%- evt.waktu_mulai %> &mdash; <%- evt.tanggal_selesai %> <%- evt.waktu_selesai %>
+			</p>
+			<% } %>
+		</dd>
+
+		<% }); %>
+	</dl>
+</div><!--/.box-info-->

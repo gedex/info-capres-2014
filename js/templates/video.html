@@ -1,0 +1,12 @@
+<div class="page-header">
+	<h1>Video</h1>
+</div>
+<div class="lead">
+	<p><%- video.judul %></p>
+
+	<small>View it on <a href="<%- video.url_video %>" target="_blank">Youtube</a></small>
+</div>
+
+<div class="video-container">
+	<iframe src="http://www.youtube.com/embed/<%- video.youtube_id %>" frameborder="0" width="560" height="315"></iframe>
+</div>
