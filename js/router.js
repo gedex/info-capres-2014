@@ -120,6 +120,8 @@ define(function(require, exports, module){
 		},
 
 		reset: function() {
+			this.showLoader();
+
 			if (this.candidates.length) {
 				this.candidates.reset();
 			}
@@ -136,6 +138,13 @@ define(function(require, exports, module){
 
 			if (!_.isNull(this.currentView)) {
 				this.currentView.remove();
+			}
+		},
+
+		// Show loading.
+		showLoader: function() {
+			if (!this.$main.find(".loader").length) {
+				this.$main.html('<div class="loader">Loading...</div>');
 			}
 		}
 
