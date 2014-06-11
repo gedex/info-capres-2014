@@ -17,15 +17,13 @@ $ npm install # for the first time
 $ grunt
 ```
 
-In case you don't have Grunt installed, the `dist` directory contains the build files.
+Build will be available on `dist` directory.
 
 ## Deploy to GitHub Page
 
 ```
 $ grunt gh-pages
 ```
-
-Build will be available on `dist` directory.
 
 ## License
 
