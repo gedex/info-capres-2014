@@ -74,23 +74,6 @@ header.navbar {
 	color: #87bab6;
 	text-shadow: 0 2px 2px rgba(0,0,0,0.4)
 }
-.container .arrow-down {
-	text-align: center;
-}
-.container .arrow-down a {
-	display: inline-block;
-	width: 48px;
-	height: 48px;
-	margin-bottom: -50px;
-	background-color: #fff;
-	border-radius: 100%;
-	color: #f6615b;
-}
-.container .arrow-down .genericon {
-	width: 48px;
-	height: 48px;
-	font-size: 48px;
-}
 
 .container .jumbotron.secondary h1 {
 	text-transform: uppercase;
@@ -109,9 +92,6 @@ a.thumbnail:hover h3 {
 .candidates-pair .thumbnail {
 	text-align: center;
 	border: none;
-}
-.candidates-pair .thumbnail img {
-	border-radius: 100%;
 }
 .candidates-pair .thumbnail .caption {
 	height: 146px;
