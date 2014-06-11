@@ -18,6 +18,17 @@ header.navbar {
 .navbar-default .navbar-nav>li>a:hover {
 	color: #fff;
 }
+.navbar-default .navbar-toggle {
+	border-color: #fff;
+	color: #fff;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+	background-color: #87bab6;
+}
+.navbar-default .navbar-toggle .icon-bar {
+	background-color: #fff;
+}
 
 .navbar-nav li {
 	font-weight: 700;
