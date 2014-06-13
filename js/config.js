@@ -6,7 +6,9 @@ require.config({
 		"require":    "libs/requirejs/require",
 		"text":       "libs/requirejs-text/text",
 		"underscore": "libs/underscore/underscore",
-		"bootstrap":  "libs/bootstrap/dist/js/bootstrap.min"
+		"bootstrap":  "libs/bootstrap/dist/js/bootstrap.min",
+		"firebase":   "libs/firebase/firebase",
+		"login":      "libs/firebase-simple-login/firebase-simple-login"
 	},
 
 	shim: {
@@ -16,6 +18,13 @@ require.config({
 		},
 		"bootstrap": {
 			deps: ["jquery"]
+		},
+		"firebase": {
+			exports: "Firebase"
+		},
+		"login": {
+			deps: ["firebase"],
+			exports: "FirebaseSimpleLogin"
 		}
 	}
 });

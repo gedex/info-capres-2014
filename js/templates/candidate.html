@@ -5,7 +5,17 @@
 			<% if (!_.isUndefined(candidate.img.source)) { %>
 			<cite>Sumber gambar <%- candidate.img.source %></cite>
 			<% } %>
-		</div>
+			<br>
+			<div id="support-container">
+				<button type="button" class="btn btn-lg btn-block require-login support-candidate unsupported" data-toggle="tooltip" data-placement="bottom" title="Give support to this candidate." data-candidate="<%- candidate.id %>">
+					<span class="genericon genericon-digg"></span>
+					<span class="text">Give support</span>
+				</button>
+				<br>
+
+				<a id="candidate-supporters-counter" class="center-block text-center small" href="#supporters/<%- candidate.id %>"></a>
+			</div><!--/#support-button-container-->
+		</div><!--/.thumbnail-->
 		<div class="box-info">
 			<h3><span class="genericon genericon-user"></span> About</h3>
 			<div class="box-info-content">
@@ -90,7 +100,7 @@
 		<div class="bio">
 			<p class="lead"><%- candidate.biografi_lead %></p>
 
-			<p><%- candidate.biografi_secondary %></p>
+			<p><%= candidate.biografi_secondary %></p>
 		</div><!--/.bio-->
 
 		<div class="box-info">

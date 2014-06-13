@@ -39,6 +39,9 @@ define(function(require, exports, module) {
 					}
 				}
 			}
+		},
+		firebase: {
+			url: "https://info-capres-2014.firebaseio.com/"
 		}
 	};
 

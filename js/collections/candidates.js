@@ -22,6 +22,8 @@ define(function(require, exports, module) {
 				_.each(resp.data.results.caleg, function(caleg, i){
 					var bio = resp.data.results.caleg[i].biografi;
 
+					bio = bio.replace(/\\n/g, "<br>");
+
 					if (!_.isEmpty(bio) && bio.length > excerpt_len) {
 						resp.data.results.caleg[i].biografi_excerpt = bio.substr(0, excerpt_len);
 					}

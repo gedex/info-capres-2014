@@ -36,6 +36,87 @@ header.navbar {
 	color: #fff;
 }
 
+.navbar-default .menu-current-user > a {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.modal-content {
+	border-radius: 0;
+}
+
+.btn {
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border: 1px solid rgba(0,0,0,0.3);
+	border-bottom-width: 3px;
+	padding: 10px 16px;
+}
+.btn-social {
+	text-align: left;
+}
+.btn-facebook {
+	color: #fff;
+	background-color: #428bca;
+}
+.btn-facebook:focus,
+.btn-facebook:active,
+.btn-facebook:hover {
+	color: #fff;
+	background-color: #3276b1;
+}
+.btn-twitter {
+	color: #fff;
+	background-color: #5bc0de;
+}
+.btn-twitter:focus,
+.btn-twitter:active,
+.btn-twitter:hover {
+	color: #fff;
+	background-color: #39b3d7;
+}
+.btn-googleplus {
+	color: #fff;
+	background-color: #d9534f;
+}
+.btn-googleplus:focus,
+.btn-googleplus:active,
+.btn-googleplus:hover {
+	color: #fff;
+	background-color: #d2322d;
+}
+.btn-lg .genericon {
+	width: 18px;
+	height: 18px;
+	font-size: 18px;
+	line-height: 1.33;
+}
+.btn.support-candidate {
+	color: #fff;
+	background-color: #428bca;
+}
+.btn.supported {
+	color: #fff;
+	background-color: #5cb85c;
+}
+
+.modal-header {
+	background-color: #f6615b;
+	border-bottom: none;
+}
+.modal-title {
+	color: #fff;
+	text-transform: uppercase;
+}
+.modal-footer {
+	background-color: #eee;
+	border-top-color: #ddd;
+}
+
 @media (min-width: 768px) {
   .container {
     max-width: 740px;

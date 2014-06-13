@@ -1,0 +1,21 @@
+<% if (_.isNull(user)) { %>
+	<li class="menu-login"><a href="#" class="require-login">Login</a></li>
+<% } else { %>
+	<li class="dropdown menu-current-user">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+			<img src="<%- user.avatar %>" alt="<%- user.displayName %>" width="28" class="img-circle hidden-xs">
+			<span class="visible-xs">Login as <%- user.displayName %></span>
+			<b class="caret"></b>
+		</a>
+		<ul class="dropdown-menu">
+			<li class="hidden-xs">
+				<a href="#account">
+					Login as <%- user.displayName %>
+				</a>
+			</li>
+			<li><a href="#account">My Account</a></li>
+			<li class="divider"></li>
+			<li><a href="#logout" class="logout">Logout</a></li>
+		</ul>
+	</li>
+<% } %>

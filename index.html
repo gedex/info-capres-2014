@@ -27,12 +27,15 @@
 		<!-- / navbar-header -->
 
 		<div class="collapse navbar-collapse" id="navbar-collapse-1">
-			<ul class="nav navbar-nav">
+			<ul class="nav navbar-nav navbar-">
 				<li><a href="#candidates">Candidates</a></li>
 				<li><a href="#news">NEWS</a></li>
 				<li><a href="#faq">FAQ</a></li>
 				<li><a href="#banners">Banners</a></li>
 			</ul><!-- /.navbar-nav -->
+
+			<ul class="nav navbar-nav navbar-right" id="nav-login">
+			</ul>
 		</div><!-- /.navbar-collapse -->
 
 	</div><!-- /.container -->
@@ -50,6 +53,38 @@
 		<p class="secondary">Source available on <a href="https://github.com/gedex/info-capres-2014" target="_blank"><span class="genericon genericon-github"></span></a></p>
 	</div>
 </footer>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-login">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Login</h4>
+			</div>
+
+			<div class="modal-body">
+				<button type="button" class="btn btn-social btn-facebook btn-lg btn-block auth-login" data-provider="facebook">
+					<span class="genericon genericon-facebook"></span>
+					Login with Facebook
+				</button>
+				<button type="button" class="btn btn-social btn-twitter btn-lg btn-block" data-provider="twitter">
+					<span class="genericon genericon-twitter"></span>
+					Login with Twitter
+				</button>
+				<button type="button" class="btn btn-social btn-googleplus btn-lg btn-block" data-provider="google">
+					<span class="genericon genericon-googleplus"></span>
+					Login with Google+
+				</button>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+
+		</div><!--/.modal-content-->
+	</div><!--/.modal-dialog-->
+</div><!--/.modal-->
 
 <!-- build:[src] source.min.js -->
 <script data-main="js/main" src="js/libs/requirejs/require.js"></script>

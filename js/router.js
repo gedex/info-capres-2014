@@ -3,6 +3,8 @@ define(function(require, exports, module){
 
 	var $ = require("jquery");
 
+	var auth = require("auth");
+
 	var CandidatesCollection = require("collections/candidates");
 	var PromisesCollection = require("collections/promises");
 	var EventsCollection = require("collections/events");
@@ -60,6 +62,10 @@ define(function(require, exports, module){
 			this.news = new NewsCollection();
 			this.faq = new FAQCollection();
 			this.banners = new BannersCollection();
+
+			auth.setRouter(this);
+			auth.bindDOMEvents();
+			auth.bindStateChange();
 		},
 
 		home: function() {
@@ -97,7 +103,13 @@ define(function(require, exports, module){
 					model: model,
 					mate: mate
 				});
+
+				this.trigger("route:view:candidate:constructed", id, this.currentView);
+
 				main.html(this.currentView.render().el);
+
+				this.trigger("route:view:candidate:rendered", id, this.currentView);
+
 			}, this);
 		},
 
