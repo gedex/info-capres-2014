@@ -1,0 +1,26 @@
+<div class="page-header">
+	<h1>Supporters of <%- candidate.nama %></h1>
+</div>
+<div class="lead">
+	<a href="#candidate/<%- candidate.id %>"><%- candidate.nama %></a> has
+	<% if (supporters_num) { %>
+		<%- supporters_num %> supporter<% if (supporters_num > 1) { %>s<% } %>.
+	<% } else { %>
+		no supporter.
+	<% } %>
+</div>
+
+<div class="row banners">
+	<% _.each(supporters, function(supporter, id) { %>
+	<div class="col-sm-6 col-md-4">
+		<a class="thumbnail image" href="#user/<%- id %>" target="_blank">
+			<img src="<%- supporter.avatar %>" width="200" height="200" class="img-circle">
+
+			<div class="caption">
+				<h3><%- supporter.displayName %></h3>
+			</div>
+		</a><!--/.thumbnail-->
+	</div>
+	<% }); %>
+
+</div><!--/.row-->

@@ -113,6 +113,72 @@ define(function(require, exports, module) {
 			}
 
 			return node.protocol + "//" + node.host + node.pathname + "?" + kvp.join("&");
+		},
+
+		// Base64 encode / decode.
+		//
+		// http://www.webtoolkit.info/
+		base64KeyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+		base64: {
+			encode: function(input) {
+				var output = "";
+				var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+				var i = 0;
+
+				input = Util.base64._utf8_encode(input);
+
+				while (i < input.length) {
+
+					chr1 = input.charCodeAt(i++);
+					chr2 = input.charCodeAt(i++);
+					chr3 = input.charCodeAt(i++);
+
+					enc1 = chr1 >> 2;
+					enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+					enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+					enc4 = chr3 & 63;
+
+					if (isNaN(chr2)) {
+						enc3 = enc4 = 64;
+					} else if (isNaN(chr3)) {
+						enc4 = 64;
+					}
+
+					output = output +
+					Util.base64KeyStr.charAt(enc1) + Util.base64KeyStr.charAt(enc2) +
+					Util.base64KeyStr.charAt(enc3) + Util.base64KeyStr.charAt(enc4);
+				}
+
+				return output;
+			},
+
+			_utf8_encode: function(str) {
+				str = str.replace(/\r\n/g,"\n");
+				var utftext = "";
+
+				for (var n = 0; n < str.length; n++) {
+					var c = str.charCodeAt(n);
+
+					if (c < 128) {
+						utftext += String.fromCharCode(c);
+					}
+					else if ((c > 127) && (c < 2048)) {
+						utftext += String.fromCharCode((c >> 6) | 192);
+						utftext += String.fromCharCode((c & 63) | 128);
+					}
+					else {
+						utftext += String.fromCharCode((c >> 12) | 224);
+						utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+						utftext += String.fromCharCode((c & 63) | 128);
+					}
+				}
+
+				return utftext;
+			}
+		}, // base64
+
+		ucfirst: function(str) {
+			return str.charAt(0).toUpperCase() + str.slice(1);
 		}
 	};
 

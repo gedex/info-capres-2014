@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="../dependencies/jquery.min.js"></script>
+        <script type="text/javascript" src="../dependencies/underscore.min.js"></script>
+        <script type="text/javascript" src="../dependencies/backbone.js"></script>
+        <script type="text/javascript" src="../backbone.statemachine.js"></script>
+        <link rel="stylesheet" type="text/css" href="examples.css" />
+    </head>
+    <body>
+        <script>
+            $(function(){
+                var element = {el: $('#myElement')};
+                _.extend(element, Backbone.StateMachine, Backbone.Events, {
+
+                    states: {
+                        'visible': {enter: ['doShow'], leave: ['doHide']}
+                    },
+
+                    transitions: {
+                        'init': {
+                            'initialized': {enterState: 'visible'}
+                        },
+                        'visible': {
+                            'hide': {enterState: 'hidden'},
+                        },
+                        'hidden': {
+                            'show': {enterState: 'visible'}
+                        }
+                    },
+
+                    doShow: function() { this.el.show(); },
+
+                    doHide: function() { this.el.hide(); },
+                });
+
+                element.startStateMachine({ debugStateMachine: true });
+                element.trigger('initialized');
+                
+                $("#showButton").click(function(){element.trigger('show')});
+                $("#hideButton").click(function(){element.trigger('hide')});
+                element.bind("leaveState:hidden", function(){
+                    alert("Now showing !");
+                });
+                element.bind("enterState:hidden", function(){
+                    alert("Now hiding !");
+                });
+                
+            });
+        </script>
+        <style>
+            #myElement {
+                width: 200px;
+                height: 100px;
+                background-color: yellow;
+                margin-top: 1em;
+            }
+        </style>
+        <button id="showButton">show</button>
+        <button id="hideButton">hide</button>
+        <div id="myElement"></div>
+    </body>
+</html>

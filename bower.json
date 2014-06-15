@@ -1,0 +1,38 @@
+{
+  "name": "info-capres-2014",
+  "version": "0.1.0",
+  "homepage": "https://github.com/gedex/info-capres-2014",
+  "authors": [
+    "Akeda Bagus <akeda@x-team.com>"
+  ],
+  "description": "Info Capres 2014",
+  "main": "js/main.js",
+  "keywords": [
+    "apipemilu",
+    "capres",
+    "2014",
+    "election"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "js/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "almond": "~0.2.9",
+    "bootstrap": "~3.1.1",
+    "backbone": "~1.1.2",
+    "firebase-simple-login": "~1.5.0",
+    "backfire": "~0.3.0",
+    "firebase": "~1.0.17",
+    "requirejs": "~2.1.14",
+    "underscore": "~1.6.0",
+    "jquery": "~2.1.1",
+    "requirejs-text": "~2.0.12",
+    "backbone.statemachine": "sebpiq/backbone.statemachine"
+  }
+}

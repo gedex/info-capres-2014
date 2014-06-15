@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="../dependencies/jquery.min.js"></script>
+        <script type="text/javascript" src="../dependencies/underscore.min.js"></script>
+        <script type="text/javascript" src="../dependencies/backbone.js"></script>
+        <script type="text/javascript" src="../backbone.statemachine.js"></script>
+        <link rel="stylesheet" type="text/css" href="examples.css" />
+    </head>
+    <body>
+        <script>
+            $(function(){
+                var ButtonView = Backbone.StatefulView.extend({
+
+                    states: {
+                        'saving': {enter: ['enterSavingCb'], leave: ['leaveSavingCb']}
+                    },
+
+                    transitions: {
+                        'init': {
+                            'initialized': {enterState: 'ready'}
+                        },
+                        'ready': {
+                            'click': {enterState: 'saving'}
+                        },
+                        'saving': {
+                            'saved': {enterState: 'ready'}
+                        }
+                    },
+
+                    enterSavingCb: function(){
+                        $(this.el).attr({'disabled': 'disabled'});
+                        $(this.el).html('Saving ...');
+                    },
+
+                    leaveSavingCb: function(){
+                        $(this.el).removeAttr('disabled');
+                        $(this.el).html('Save');
+                    },
+
+                    initialize: function() {
+                        this.trigger('initialized');
+                    }
+                });
+
+                myButtonView = new ButtonView({
+                    el: $('#saveButton'),
+                    debugStateMachine: true
+                });
+
+                myButtonView.bind('enterState:saving', function(){
+                    setTimeout(function(){myButtonView.trigger('saved')}, 3000);
+                });
+            });
+        </script>
+        <style>
+            #saveButton {
+                width: 100px;
+                height: 40px;
+                font-size: 16px;
+                border: none;
+            }
+            #saveButton.ready {
+                background-color: DarkGreen;
+                color: white;
+            }
+            #saveButton.saving {
+                background-color: LightGrey;
+                color: grey;
+            }
+        </style>
+        <button id="saveButton">Save</button>
+        <div class="exampleNotes">The above button is initially in <b>ready</b> state. Click on it to change its state to <b>saving</b>. A 3 seconds timeout will trigger another state change, and the button will be back to <b>ready</b> state.</div>
+    </body>
+</html>
