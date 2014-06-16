@@ -17,10 +17,10 @@ require.config({
 			deps:    ["jquery", "underscore"],
 			exports: "Backbone"
 		},
-		"statemachine": {
-			deps: ["backbone"],
-			exports: "Backbone.StateMachine"
+		"underscore": {
+			exports: "_"
 		},
+		"statemachine": ["underscore","backbone"],
 		"bootstrap": {
 			deps: ["jquery"]
 		},

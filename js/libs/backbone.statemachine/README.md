@@ -242,15 +242,22 @@ http://upload.wikimedia.org/wikipedia/commons/c/cf/Finite_state_machine_example_
 Release History
 ================
 
+0.2.6
+------
+
+- Repackaged for browserify and AMD, and available through npm
+
 0.2.5
 ------
 
 - Callbacks can also be anonymous functions
+- Switched to 2-spaces indentation and removed semicolons
+- Now throws an error if `startStateMachine` is called twice
 
 0.2.4
 ------
 
-- Added StatefulModel
+- Added `StatefulModel`
 - Added simplified syntax for transition declaration if only the `enterState` if specified
 
 0.2.3

@@ -6,18 +6,43 @@
  * Licensed under the MIT license.
  */
 
+(function(global, factory) {
+  'use strict';
+  var Backbone = global.Backbone
+    , _ = global._
 
-Backbone.StateMachine = (function(Backbone, _) {
+  // AMD. Register as an anonymous module.  Wrap in function so we have access
+  // to root via `this`.
+  if (typeof define === 'function' && define.amd) {
+    return define(['backbone', 'underscore'], function() {
+      return factory.apply(global, arguments)
+    })
+  }
 
-  // This is a key that means 'any state'.
-  var ANY_STATE = '*'
+  // NodeJS. Calling with required packages
+  if (typeof module === 'object' && module.exports) {
+    return factory.call(global, require('backbone'), require('underscore'))
+  }
 
-  // This is the key for the initial state.
-  var INIT_STATE = 'init'
+  // Browser globals.
+  factory.call(global, Backbone, _)
 
-  // Mixin object to create a state machine out of any other object.
-  // Note that this requires to be mixed-in with Backbone.Event as well.
-  var StateMachine = {
+} (typeof global === "object" ? global : this, 
+
+  function (Backbone, _) {
+    var $ = Backbone.$
+
+    // This is a key that means 'any state'.
+    var ANY_STATE = '*'
+
+    // This is the key for the initial state.
+    var INIT_STATE = 'init'
+
+
+    // ------------------------- StateMachine ------------------------- //
+    // Mixin object to create a state machine out of any other object.
+    // Note that this requires to be mixed-in with Backbone.Event as well.
+    var StateMachine = Backbone.StateMachine = {
 
       currentState: undefined,
 
@@ -139,7 +164,7 @@ Backbone.StateMachine = (function(Backbone, _) {
           for (event in transitions[leaveState])
             this.transition(leaveState, event, transitions[leaveState][event])
 
-        if (!(transitions.hasOwnProperty(INIT_STATE) 
+        if (!(transitions.hasOwnProperty(INIT_STATE)
           || transitions.hasOwnProperty(ANY_STATE)) && typeof console !== 'undefined')
           console.warn('there is no transition from state "init" to another state.')
       },
@@ -187,184 +212,181 @@ Backbone.StateMachine = (function(Backbone, _) {
 
     }
 
-    StateMachine.version = '0.2.5'
 
-    return StateMachine
-
-  }(Backbone, _))
-
-
-// A Backbone model that is also a state machine.
-Backbone.StatefulModel = (function(Backbone, _) {
-
-  var StatefulModel = function(options) {
-    this.startStateMachine(options)
-    Backbone.Model.prototype.constructor.apply(this, arguments)
-  }
-  // Fix instanceof for StatefulModel
-  var sfmProto = StatefulModel.prototype = new Backbone.Model()
-  delete sfmProto.cid
-  delete sfmProto.attributes
-  delete sfmProto.changed
-
-  _.extend(StatefulModel.prototype, Backbone.Model.prototype, Backbone.StateMachine)
-  StatefulModel.extend = Backbone.Model.extend
-  return StatefulModel
-
-}(Backbone, _))
-
-
-// A Backbone view that is also a state machine.
-Backbone.StatefulView = (function(Backbone, _){
-
-  var StatefulView = function(options) {
-    this.startStateMachine(options)
-    Backbone.View.prototype.constructor.apply(this, arguments)
-  }
-  // Fix instanceof for StatefulView
-  var sfvProto = StatefulView.prototype = new Backbone.View()
-  delete sfvProto.cid
-  delete sfvProto.options
-  delete sfvProto.el
-  delete sfvProto.$el
-
-  _.extend(StatefulView.prototype, Backbone.View.prototype, Backbone.StateMachine, {
-
-    toState: function(name) {
-      if (this.el && (this.el instanceof HTMLElement)) {
-        $(this.el).removeClass((this.stateClassName || ''))
-        this.stateClassName = (this._states[name].className || name)
-        $(this.el).addClass(this.stateClassName)
-      }
-      Backbone.StateMachine.toState.apply(this, arguments)
-    },
-
-    delegateEvents: function(events) {
-      // We want all the events in the `transitions` hash to be triggered
-      // like events in `View.events`.
-      if (!events) {
-        events = (this.events && _.clone(this.events)) || {}
-        if (events && _.isFunction(events)) events = events()
-
-        _.each(this.getMachineEvents(), function(event) {
-          // If there was already a callback for that event,
-          // we must fetch it, and call it ourselves ... sigh ...
-          var method = events[event]
-          if (method) {
-            if (!_.isFunction(method)) method = this[method]
-            if (!method)
-              throw new Error('Method "' + events[event] + '" does not exist')
-          }
-          events[event] = function(DOMEvent) {
-            if (method) method.apply(this, arguments)
-            this._onMachineEvent(event, DOMEvent)
-          }
-        }, this)
-      }
-      Backbone.View.prototype.delegateEvents.call(this, events)
+    // ------------------------- StatefulModel ------------------------- //
+    // A Backbone model that is also a state machine.
+    var StatefulModel = Backbone.StatefulModel = function(options) {
+      this.startStateMachine(options)
+      Backbone.Model.prototype.constructor.apply(this, arguments)
     }
-  })
+    // Fix instanceof for StatefulModel
+    var sfmProto = StatefulModel.prototype = new Backbone.Model()
+    delete sfmProto.cid
+    delete sfmProto.attributes
+    delete sfmProto.changed
 
-  // Set up inheritance for StatefulView.
-  StatefulView.extend = Backbone.View.extend
-
-  return StatefulView
-}(Backbone, _))
+    _.extend(StatefulModel.prototype, Backbone.Model.prototype, Backbone.StateMachine)
+    StatefulModel.extend = Backbone.Model.extend
 
 
-// State machine debugger (ugh :-S).
-;(function(Backbone, _){
-  Backbone.StateMachine.DebugView = Backbone.View.extend({
-    tagName: 'div',
-    className: 'backbone-statemachine-debug',
-    rendered: false,
-    events: {
-      'click .log': 'logStateMachine'
-    },
-    render: function() {
-      // This is only called when rendering the first time.
-      if (!this.rendered) {
-          // sets-up periodic rendering, so the debug view is always up-to-date.
-          var periodicRender = function() {
-            this.render()
-            setTimeout(_.bind(periodicRender, this), 100)
-          }
-          setTimeout(_.bind(periodicRender, this), 100)
-          this.rendered = true
-          // sets-up the debug view's html
-          var innerHtml = $('<div class="state"></div><a class="log">console.log</a>')
-          $(this.el).append(innerHtml)
-          // when the debug view is hovered, if the state machine it represents is a view
-          // itself, we highlight its element on the page.
-          if (this.model.hasOwnProperty('el')) {
-            $(this.el).hover(_.bind(function(){
-              var modelEl = $(this.model.el)
-              this.cssMem = {'background-color': '', 'border': ''}
-              modelEl.css({'background-color': 'blue','border': '3px solid DarkBlue'})
-            }, this))
-            $(this.el).mouseleave(_.bind(function(){
-              var modelEl = $(this.model.el)
-              modelEl.css(this.cssMem)
-            }, this))
-          }
+    // ------------------------- StatefulView ------------------------- //
+    // A Backbone view that is also a state machine.
+    var StatefulView = Backbone.StatefulView = function(options) {
+      this.startStateMachine(options)
+      Backbone.View.prototype.constructor.apply(this, arguments)
+    }
+
+    // If no jquery, we cannot create views
+    if (!Backbone.$) {
+      StatefulView = Backbone.StatefulView = function(options) {
+        throw new Error('Backbone.View is not available')
+      }
+    } else {
+      // Fix instanceof for StatefulView
+      var sfvProto = StatefulView.prototype = new Backbone.View()
+      delete sfvProto.cid
+      delete sfvProto.options
+      delete sfvProto.el
+      delete sfvProto.$el
+    }
+
+    _.extend(StatefulView.prototype, Backbone.View.prototype, Backbone.StateMachine, {
+
+      toState: function(name) {
+        if (this.el && (this.el instanceof HTMLElement)) {
+          $(this.el).removeClass((this.stateClassName || ''))
+          this.stateClassName = (this._states[name].className || name)
+          $(this.el).addClass(this.stateClassName)
         }
-      // this does the actual updating of the debug view's html.
-      this.$('.state').html(this.model.currentState)
-      return this
-    },
-    logStateMachine: function(event) {
-      event.preventDefault()
-      console.log(this.model)
-    }
-  }, {
-    // Registers a state machine in the debugger, so that a debug view will be created for it.
-    register: function(instance) {
-      // If this is the first state machine registered in the debugger,
-      // we create the debugger's html.
-      if (this.viewsArray.length === 0) {
-        var container = this.el = $('<div id="backbone-statemachine-debug-container">'+
-          '<h3>backbone.statemachine: DEBUGGER</h3>'+
-          '<a id="backbone-statemachine-debug-hideshow">hide</a>'+
-          '<style>'+
-          '#backbone-statemachine-debug-container{background-color:rgba(0,0,0,0.5);position:absolute;height:300px;width:300px;right:0;top:0;padding:10px;z-index:10;-moz-border-radius-bottomleft:30px;-webkit-border-radius-bottomleft:30px;border-bottom-left-radius:30px;}'+
-          '#backbone-statemachine-debug-container.collapsed{height:20px;width:60px;}'+
-          '#backbone-statemachine-debug-container a{color:blue;cursor:pointer;}'+
-          '#backbone-statemachine-debug-container h3{margin:0;text-align:center;color:white;margin-bottom:0.5em;}'+
-          '.backbone-statemachine-debug{width:60px;height:60px;-moz-border-radius:30px;-webkit-border-radius:30px;border-radius:30px;text-align:center;}'+
-          '.backbone-statemachine-debug .state{font-weight:bold;}'+
-          'a#backbone-statemachine-debug-hideshow{position:absolute;bottom:12px;left:12px;font-weight:bold;color:white;}'+
-          '</style></div>'
-        ).appendTo($('body'))
+        Backbone.StateMachine.toState.apply(this, arguments)
+      },
 
-        $('#backbone-statemachine-debug-hideshow', this.el).click(function(event){
-          event.preventDefault()
-          if (this.collapsed) {
-            $(container).removeClass('collapsed').children().show()
-            $(this).html('hide')
-            this.collapsed = false
-          } else {
-            $(container).addClass('collapsed').children().hide()
-            $(this).html('show').show()
-            this.collapsed = true
-          }
-        })
+      delegateEvents: function(events) {
+        // We want all the events in the `transitions` hash to be triggered
+        // like events in `View.events`.
+        if (!events) {
+          events = (this.events && _.clone(this.events)) || {}
+          if (events && _.isFunction(events)) events = events()
+
+          _.each(this.getMachineEvents(), function(event) {
+            // If there was already a callback for that event,
+            // we must fetch it, and call it ourselves ... sigh ...
+            var method = events[event]
+            if (method) {
+              if (!_.isFunction(method)) method = this[method]
+              if (!method)
+                throw new Error('Method "' + events[event] + '" does not exist')
+            }
+            events[event] = function(DOMEvent) {
+              if (method) method.apply(this, arguments)
+              this._onMachineEvent(event, DOMEvent)
+            }
+          }, this)
+        }
+        Backbone.View.prototype.delegateEvents.call(this, events)
       }
-      // create the debug view, pick a random color for it, and add it to the debugger.
-      var debugView = new this({model: instance})
-      var bgColor = this.pickColor()
-      $(debugView.el).appendTo(this.el).css({'background-color': bgColor})
-      debugView.render()
-      if (this.collapsed) $(debugView.el).hide()
-      this.viewsArray.push(debugView)
-    },
-    update: function() {
-      _.each(this.viewsArray, function(view){ view.render() })
-    },
-    pickColor: function() {
-      return '#'+Math.floor(Math.random()*16777215).toString(16)
-    },
-    viewsArray: [],
-    el: undefined,
-    collapsed: false
-  })
-}(Backbone, _))
+    })
+
+    // Set up inheritance for StatefulView.
+    StatefulView.extend = Backbone.View.extend
+
+
+    // ------------------------- Debugger ------------------------- //
+    // State machine debugger (ugh :-S).
+    Backbone.StateMachine.DebugView = Backbone.View.extend({
+      tagName: 'div',
+      className: 'backbone-statemachine-debug',
+      rendered: false,
+      events: {
+        'click .log': 'logStateMachine'
+      },
+      render: function() {
+        // This is only called when rendering the first time.
+        if (!this.rendered) {
+            // sets-up periodic rendering, so the debug view is always up-to-date.
+            var periodicRender = function() {
+              this.render()
+              setTimeout(_.bind(periodicRender, this), 100)
+            }
+            setTimeout(_.bind(periodicRender, this), 100)
+            this.rendered = true
+            // sets-up the debug view's html
+            var innerHtml = $('<div class="state"></div><a class="log">console.log</a>')
+            $(this.el).append(innerHtml)
+            // when the debug view is hovered, if the state machine it represents is a view
+            // itself, we highlight its element on the page.
+            if (this.model.hasOwnProperty('el')) {
+              $(this.el).hover(_.bind(function(){
+                var modelEl = $(this.model.el)
+                this.cssMem = {'background-color': '', 'border': ''}
+                modelEl.css({'background-color': 'blue','border': '3px solid DarkBlue'})
+              }, this))
+              $(this.el).mouseleave(_.bind(function(){
+                var modelEl = $(this.model.el)
+                modelEl.css(this.cssMem)
+              }, this))
+            }
+          }
+        // this does the actual updating of the debug view's html.
+        this.$('.state').html(this.model.currentState)
+        return this
+      },
+      logStateMachine: function(event) {
+        event.preventDefault()
+        console.log(this.model)
+      }
+    }, {
+      // Registers a state machine in the debugger, so that a debug view will be created for it.
+      register: function(instance) {
+        // If this is the first state machine registered in the debugger,
+        // we create the debugger's html.
+        if (this.viewsArray.length === 0) {
+          var container = this.el = $('<div id="backbone-statemachine-debug-container">'+
+            '<h3>backbone.statemachine: DEBUGGER</h3>'+
+            '<a id="backbone-statemachine-debug-hideshow">hide</a>'+
+            '<style>'+
+            '#backbone-statemachine-debug-container{background-color:rgba(0,0,0,0.5);position:absolute;height:300px;width:300px;right:0;top:0;padding:10px;z-index:10;-moz-border-radius-bottomleft:30px;-webkit-border-radius-bottomleft:30px;border-bottom-left-radius:30px;}'+
+            '#backbone-statemachine-debug-container.collapsed{height:20px;width:60px;}'+
+            '#backbone-statemachine-debug-container a{color:blue;cursor:pointer;}'+
+            '#backbone-statemachine-debug-container h3{margin:0;text-align:center;color:white;margin-bottom:0.5em;}'+
+            '.backbone-statemachine-debug{width:60px;height:60px;-moz-border-radius:30px;-webkit-border-radius:30px;border-radius:30px;text-align:center;}'+
+            '.backbone-statemachine-debug .state{font-weight:bold;}'+
+            'a#backbone-statemachine-debug-hideshow{position:absolute;bottom:12px;left:12px;font-weight:bold;color:white;}'+
+            '</style></div>'
+          ).appendTo($('body'))
+
+          $('#backbone-statemachine-debug-hideshow', this.el).click(function(event){
+            event.preventDefault()
+            if (this.collapsed) {
+              $(container).removeClass('collapsed').children().show()
+              $(this).html('hide')
+              this.collapsed = false
+            } else {
+              $(container).addClass('collapsed').children().hide()
+              $(this).html('show').show()
+              this.collapsed = true
+            }
+          })
+        }
+        // create the debug view, pick a random color for it, and add it to the debugger.
+        var debugView = new this({model: instance})
+        var bgColor = this.pickColor()
+        $(debugView.el).appendTo(this.el).css({'background-color': bgColor})
+        debugView.render()
+        if (this.collapsed) $(debugView.el).hide()
+        this.viewsArray.push(debugView)
+      },
+      update: function() {
+        _.each(this.viewsArray, function(view){ view.render() })
+      },
+      pickColor: function() {
+        return '#'+Math.floor(Math.random()*16777215).toString(16)
+      },
+      viewsArray: [],
+      el: undefined,
+      collapsed: false
+    })
+
+  }
+));
+

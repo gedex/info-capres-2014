@@ -3,8 +3,9 @@ define(function(require, exports, module) {
 
 	var _ = require("underscore");
 	var $ = require("jquery");
+
 	var Backbone = require("backbone");
-	var StateMachine = require("statemachine");
+	require("statemachine");
 
 	var Firebase = require("firebase");
 	var FirebaseSimpleLogin = require("login");
@@ -16,7 +17,7 @@ define(function(require, exports, module) {
 		this.initialize.apply(this, arguments);
 	}
 
-	_.extend(Auth.prototype, StateMachine, Backbone.Events, {
+	_.extend(Auth.prototype, Backbone.StateMachine, Backbone.Events, {
 
 		states: {
 			toFigureOut: {enter: ["checkState"]},

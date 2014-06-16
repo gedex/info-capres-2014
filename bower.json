@@ -33,6 +33,6 @@
     "underscore": "~1.6.0",
     "jquery": "~2.1.1",
     "requirejs-text": "~2.0.12",
-    "backbone.statemachine": "sebpiq/backbone.statemachine"
+    "backbone.statemachine": "git@github.com:sebpiq/backbone.statemachine#master"
   }
 }

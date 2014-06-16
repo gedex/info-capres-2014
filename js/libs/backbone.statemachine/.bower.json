@@ -1,14 +1,13 @@
 {
   "name": "backbone.statemachine",
   "homepage": "https://github.com/sebpiq/backbone.statemachine",
-  "version": "0.2.5",
-  "_release": "0.2.5",
+  "_release": "c60280f268",
   "_resolution": {
-    "type": "version",
-    "tag": "v0.2.5",
-    "commit": "cf7f970f0258d6e3ad4a9d77fdfa07c3822f952f"
+    "type": "branch",
+    "branch": "master",
+    "commit": "c60280f2684bd6423be66bb94ca97b05b2709895"
   },
-  "_source": "git://github.com/sebpiq/backbone.statemachine.git",
-  "_target": "*",
-  "_originalSource": "sebpiq/backbone.statemachine"
+  "_source": "git@github.com:sebpiq/backbone.statemachine.git",
+  "_target": "master",
+  "_originalSource": "git@github.com:sebpiq/backbone.statemachine"
 }

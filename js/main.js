@@ -1,12 +1,13 @@
 define("run", function(require){
+	var app = require("app");
+	var Router = require("router");
+	app.router = new Router();
+
 	var $ = require("jquery");
 	var _ = require("underscore");
-	var bootstrap = require("bootstrap");
 	var Backbone = require("backbone");
-	var Router = require("router");
-	var App = require("app");
 
-	var router = new Router();
+	require("bootstrap");
 
 	Backbone.history.start();
 });
