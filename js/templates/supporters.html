@@ -11,9 +11,9 @@
 </div>
 
 <div class="row banners">
-	<% _.each(supporters, function(supporter, id) { %>
+	<% _.each(supporters, function(supporter) { %>
 	<div class="col-sm-6 col-md-4">
-		<a class="thumbnail image" href="#user/<%- id %>" target="_blank">
+		<a class="thumbnail image" href="#user/<%- supporter.id %>">
 			<img src="<%- supporter.avatar %>" width="200" height="200" class="img-circle">
 
 			<div class="caption">

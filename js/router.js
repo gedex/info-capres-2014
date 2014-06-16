@@ -25,6 +25,7 @@ define(function(require, exports, module){
 	var BannersView = require("views/banners");
 
 	var AccountView = require("views/account");
+	var UserView = require("views/user");
 
 	var homeTemplate = require("text!templates/home.html");
 	var authNavTemplate = require("text!templates/auth-nav.html");
@@ -52,6 +53,7 @@ define(function(require, exports, module){
 			"news":                   "news",
 			"banners":                "banners",
 			"account":                "myAcccount",
+			"user/:id":               "viewUser",
 
 			"*path":                  "home",
 		},
@@ -62,7 +64,7 @@ define(function(require, exports, module){
 			this.$main = $("#main");
 			this.$mainParent = this.$main.parent();
 
-			this.$modalLogin = $("#modal-login");
+			this.$modalLogin = $("#modal-login").modal({show: false});
 			this.$navLogin = $("#nav-login");
 
 			this.navLoginTemplate = _.template(authNavTemplate);
@@ -82,7 +84,7 @@ define(function(require, exports, module){
 			this.$mainParent.attr("class", "content-head");
 			this.$main.html(homeTemplate);
 
-			if (path === "loginPrompt") this.$modalLogin.modal();
+			if (path === "loginPrompt") this.$modalLogin.modal('show');
 		},
 
 		candidates: function() {
@@ -361,6 +363,22 @@ define(function(require, exports, module){
 			}
 		},
 
+		viewUser: function(id) {
+			this.reset();
+
+			auth.users.child(id).once("value", $.proxy(this.viewUserRender, this));
+		},
+
+		viewUserRender: function(snapshot) {
+			var user = snapshot.val();
+
+			this.currentView = new UserView({
+				user: user,
+				auth: auth
+			});
+			this.$main.html(this.currentView.render().el);
+		},
+
 		reset: function() {
 			this.showLoader();
 
@@ -419,7 +437,6 @@ define(function(require, exports, module){
 
 		// Actions to be performed when auth state changes.
 		transitionState: function(leaveState, enterState) {
-			console.log("leaveState " + leaveState + " enterState " + enterState);
 
 			if (leaveState === "anonymous" && _.contains(["fetch", "userReady"], enterState)) {
 				this.$modalLogin.modal('hide');
@@ -466,7 +483,7 @@ define(function(require, exports, module){
 			}
 
 			if (auth.currentState === "anonymous") {
-				this.$modalLogin.modal();
+				this.$modalLogin.modal('show');
 			}
 		},
 

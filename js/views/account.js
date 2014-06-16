@@ -47,8 +47,10 @@ define(function(require, exports, module) {
 
 			var userRef = this.auth.users.child(this.user.id);
 			var onComplete = function(error) {
-				if (error) console.log(error);
-				alert("Updated");
+				if (!error) {
+					// @todo implement a better notification.
+					alert("Updated");
+				}
 			};
 
 			userRef.update(data, onComplete);
